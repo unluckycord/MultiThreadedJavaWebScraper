@@ -1,7 +1,6 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\logan\\Downloads\\jsoup-1.16.1.jar",
-        "jsoup-1.16.1.jar"
+        "c:\\Users\\logan\\Downloads\\jsoup-1.16.1.jar"
     ]
 }
