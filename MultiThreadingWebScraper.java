@@ -90,7 +90,7 @@ public class MultiThreadingWebScraper {
         @Override
         public void run() {
             System.out.println("Thread " + name + " started.");
-
+            while(websiteIndex < websiteList.size())
                 // lauches the webscraper for each thread
                 webScraper(AssignWebsite());
 
