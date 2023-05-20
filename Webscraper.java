@@ -6,9 +6,14 @@ import java.io.IOException;
 
 public class Webscraper{
 
-    public static void main(String[] args) {
+    public static Document webScraperWebsitePicker(String website) throws IOException{
+        Document document = Jsoup.connect(website).get();
+        return document;
+    }
+
+    public static void webScraper(String string) {
         try {
-            // Connect to the website and retrieve its HTML
+
             Document document = Jsoup.connect("https://apple.com").get();
 
             // Extract specific elements from the HTML
