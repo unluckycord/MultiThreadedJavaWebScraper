@@ -1,4 +1,4 @@
-package src.main.java;
+package src.main.java.MultiThreadingWebScrapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
