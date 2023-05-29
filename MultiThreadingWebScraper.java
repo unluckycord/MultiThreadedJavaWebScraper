@@ -5,8 +5,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,22 +24,52 @@ public class MultiThreadingWebScraper {
         return "https://"+website;
     }
 
-    public static void storeData(String website){
+    public static void storeData(String website, ArrayList<String> links, ArrayList<String> images, 
+    ArrayList<String> metaDataTagName, ArrayList<String> metaDataName, ArrayList<String> metaDataContent ){
+
         int startOfIndex = 8;
         int endOfIndex = website.indexOf(".");
+        String fileName = website.substring(startOfIndex, endOfIndex);
         try{
-            File outputTextFile = new File( "WebsiteData/" + website.substring(startOfIndex, endOfIndex) + ".txt");
-            if(outputTextFile.createNewFile()){
-
-            }else{
-                System.out.println("A file already exists with that name");
-            }
+            //File outputTextFile = new File( "WebsiteData/" + fileName + ".txt");
+            BufferedWriter writeToTextFile = new BufferedWriter(new FileWriter("WebsiteData/"+fileName +".txt", true));
+            //if(outputTextFile.createNewFile()){
+                for(int i = 0; i< links.size(); i++){
+                    writeToTextFile.write(links.get(i)+ "\n");
+                }
+                for(int i = 0; i< images.size(); i++){
+                    writeToTextFile.write(images.get(i)+ "\n");
+                }
+                for(int i = 0; i< metaDataTagName.size(); i++){
+                    writeToTextFile.write(metaDataTagName.get(i)+ "\n");
+                }
+                for(int i = 0; i< metaDataName.size(); i++){
+                    writeToTextFile.write(metaDataName.get(i)+ "\n");
+                }
+                for(int i = 0; i< metaDataContent.size(); i++){
+                    writeToTextFile.write(metaDataContent.get(i)+ "\n");
+                }
+                writeToTextFile.close();
+            //}else{
+            //    System.out.println("A file already exists with that name");
+            //}
         }catch(IOException e){
-
+        
         }
     }
 
     public static void webScraper(String website) {
+        ArrayList<String> linkStorageArrayList = new ArrayList<String>();
+        ArrayList<String> imageArrayList = new ArrayList<String>();
+        ArrayList<String> metaDataTagNameArrayList = new ArrayList<String>();
+        ArrayList<String> metaDataNameArrayList = new ArrayList<String>();
+        ArrayList<String> metaDataContentArrayList = new ArrayList<String>();
+        linkStorageArrayList.add("Links: \n");
+        imageArrayList.add("Images: \n");
+        metaDataTagNameArrayList.add("Tag name: \n");
+        metaDataNameArrayList.add("Name Attribute: \n");
+        metaDataContentArrayList.add("Content Attribute: \n");
+
         try {
 
             Document document = Jsoup.connect(website).get();
@@ -47,31 +79,31 @@ public class MultiThreadingWebScraper {
             Elements images = document.select("img[src]");
             Elements metaTags = document.select("meta");
 
-            // Print the extracted links
-            System.out.println("Links:");
+            // Finds all links on a website
             for (Element link : links) {
                 String url = link.attr("abs:href");
-                System.out.println(url);
+                linkStorageArrayList.add(url);
             }
 
-            // Print the extracted images
-            System.out.println("\nImages:");
+            // Finds all images on a website
             for (Element image : images) {
                 String imageUrl = image.attr("abs:src");
-                System.out.println(imageUrl);
+                imageArrayList.add(imageUrl);
             }
-
+            // Finds all meta data
             for (Element metaTag : metaTags){
                 String tagname = metaTag.tagName();
                 String name = metaTag.attr("name");
                 String content = metaTag.attr("content");
-                System.out.println("Tag name: " + tagname);
-                System.out.println("Name Attribute: "+ name);
-                System.out.println("Content Attribute: " + content);
+                metaDataTagNameArrayList.add(tagname);
+                metaDataNameArrayList.add(name);
+                metaDataContentArrayList.add(content);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        storeData(website, linkStorageArrayList, imageArrayList, metaDataTagNameArrayList, 
+        metaDataNameArrayList, metaDataContentArrayList);
     }
 
     public static void CreatesThreads(int AmountOfThreads, String website) {
