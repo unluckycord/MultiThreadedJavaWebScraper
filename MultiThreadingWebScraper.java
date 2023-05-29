@@ -28,26 +28,22 @@ public class MultiThreadingWebScraper {
         try{
             //File outputTextFile = new File( "WebsiteData/" + fileName + ".txt");
             BufferedWriter writeToTextFile = new BufferedWriter(new FileWriter("WebsiteData/"+fileName +".txt", true));
-            //if(outputTextFile.createNewFile()){
-                for(int i = 0; i< links.size(); i++){
-                    writeToTextFile.write(links.get(i)+ "\n");
-                }
-                for(int i = 0; i< images.size(); i++){
-                    writeToTextFile.write(images.get(i)+ "\n");
-                }
-                for(int i = 0; i< metaDataTagName.size(); i++){
-                    writeToTextFile.write(metaDataTagName.get(i)+ "\n");
-                }
-                for(int i = 0; i< metaDataName.size(); i++){
-                    writeToTextFile.write(metaDataName.get(i)+ "\n");
-                }
-                for(int i = 0; i< metaDataContent.size(); i++){
-                    writeToTextFile.write(metaDataContent.get(i)+ "\n");
-                }
-                writeToTextFile.close();
-            //}else{
-            //    System.out.println("A file already exists with that name");
-            //}
+            for(int i = 0; i< links.size(); i++){
+                writeToTextFile.write(links.get(i)+ "\n");
+            }
+            for(int i = 0; i< images.size(); i++){
+                writeToTextFile.write(images.get(i)+ "\n");
+            }
+            for(int i = 0; i< metaDataTagName.size(); i++){
+                writeToTextFile.write(metaDataTagName.get(i)+ "\n");
+            }
+            for(int i = 0; i< metaDataName.size(); i++){
+                writeToTextFile.write(metaDataName.get(i)+ "\n");
+            }
+            for(int i = 0; i< metaDataContent.size(); i++){
+                writeToTextFile.write(metaDataContent.get(i)+ "\n");
+            }
+            writeToTextFile.close();
         }catch(IOException e){
         
         }
