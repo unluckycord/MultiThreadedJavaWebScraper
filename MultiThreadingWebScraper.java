@@ -5,6 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +20,21 @@ public class MultiThreadingWebScraper {
         String website = websiteList.get(websiteIndex);
         websiteIndex++;
         return "https://"+website;
+    }
+
+    public static void storeData(String website){
+        int startOfIndex = 8;
+        int endOfIndex = website.indexOf(".");
+        try{
+            File outputTextFile = new File( "WebsiteData/" + website.substring(startOfIndex, endOfIndex) + ".txt");
+            if(outputTextFile.createNewFile()){
+
+            }else{
+                System.out.println("A file already exists with that name");
+            }
+        }catch(IOException e){
+
+        }
     }
 
     public static void webScraper(String website) {
