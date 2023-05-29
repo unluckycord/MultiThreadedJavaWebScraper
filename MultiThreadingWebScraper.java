@@ -1,4 +1,4 @@
-package src.main.java.MultiThreadingWebScrapper;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,6 +29,7 @@ public class MultiThreadingWebScraper {
             // Extract specific elements from the HTML
             Elements links = document.select("a[href]");
             Elements images = document.select("img[src]");
+            Elements metaTags = document.select("meta");
 
             // Print the extracted links
             System.out.println("Links:");
@@ -42,6 +43,15 @@ public class MultiThreadingWebScraper {
             for (Element image : images) {
                 String imageUrl = image.attr("abs:src");
                 System.out.println(imageUrl);
+            }
+
+            for (Element metaTag : metaTags){
+                String tagname = metaTag.tagName();
+                String name = metaTag.attr("name");
+                String content = metaTag.attr("content");
+                System.out.println("Tag name: " + tagname);
+                System.out.println("Name Attribute: "+ name);
+                System.out.println("Content Attribute: " + content);
             }
         } catch (IOException e) {
             e.printStackTrace();
